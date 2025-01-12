@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { RestaurantImage } from "./restaurant-image.entity";
+import { Review } from "src/review/entities/review.entity";
 
 @Entity()
 export class Restaurant {
@@ -15,15 +16,20 @@ export class Restaurant {
     @Column('text')
     description: string;
 
-    @OneToMany( (type) => RestaurantImage, restaurantImage => restaurantImage.restaurant, {
+    
+    @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
+    
+    @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+    updatedAt: Date;
+
+    @OneToMany( () => RestaurantImage, restaurantImage => restaurantImage.restaurant, {
         cascade: true,
         eager: true,
     } )
     images: RestaurantImage[];
 
-    @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-    createdAt: Date;
+    @OneToMany( () => Review, review => review.id )
+    reviews: Review[];
 
-    @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-    updatedAt: Date;
 }

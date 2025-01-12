@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { BcryptAdapter } from './adapters/bcrypt.adapter';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,8 @@ export class AuthService {
   constructor(
     @InjectRepository(User) 
     private readonly userRepository: Repository<User>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly emailService: EmailService,
   ) {}
 
   private handleDBErrors = ( error: any ) => {
@@ -36,10 +38,14 @@ export class AuthService {
       } );
       
       await this.userRepository.save( newUser );
+
+      const token = this.jwtService.sign({ id: newUser.id });
+
+      await this.emailService.sendEmail( userData.email, token );
       
       return {
         ...userData,
-        token: this.jwtService.sign({ id: newUser.id }),
+        token,
       };
 
     } catch (error) {
@@ -73,6 +79,29 @@ export class AuthService {
       profilePicture: dbUser.profilePicture,
       token: this.jwtService.sign({ id: dbUser.id }),
     }
+  }
+
+  activateUser( token: string ) {
+    const { id } = this.jwtService.verify( token );
+
+    if( !id )
+      throw new BadRequestException('Token is not valid');
+
+    try {
+      this.userRepository.createQueryBuilder()
+        .update(User)
+        .set({ isEmailConfirmed: true })
+        .where({ id })
+        .execute();
+  
+      return {
+        msg: 'Email successfully confirmed'
+      };
+      
+    } catch (error) {
+      this.handleDBErrors( error );
+    }
+
   }
 
  

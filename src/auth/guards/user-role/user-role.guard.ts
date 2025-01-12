@@ -16,7 +16,7 @@ export class UserRoleGuard implements CanActivate {
 
     const validRoles: string[] = this.reflector.get('roles', context.getHandler() );
 
-    
+    // ? When no role is specified, is not a protected route
     if( !validRoles || validRoles.length === 0 )
       return true;
     

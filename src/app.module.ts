@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RestaurantModule } from './restaurant/restaurant.module';
+import { EmailModule } from './email/email.module';
+import { ReviewModule } from './review/review.module';
 
 
 @Module({
@@ -25,6 +27,10 @@ import { RestaurantModule } from './restaurant/restaurant.module';
     AuthModule,
 
     RestaurantModule,
+
+    EmailModule,
+
+    ReviewModule,
     
   ],
   controllers: [AppController],

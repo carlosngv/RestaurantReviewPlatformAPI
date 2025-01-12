@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ReviewLike } from "src/review/entities/review-like.entity";
+import { Review } from "src/review/entities/review.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -44,5 +46,15 @@ export class User {
     })
     isActive: boolean;
 
+    @Column('bool', {
+        default: false,
+    })
+    isEmailConfirmed: boolean;
+
+    @OneToMany( () => Review, review => review.id )
+    reviews: Review[];
+
+    @OneToMany( () => ReviewLike, reviewLike => reviewLike.id )
+    likes: ReviewLike[];
 
 }

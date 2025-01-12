@@ -21,6 +21,11 @@ export class AuthController {
     return this.authService.loginUser(loginUserDto);
   }
 
+  @Get('confirmation/:token')
+  confirmUser(@Param('token') token: string ) {
+    return this.authService.activateUser( token );
+  }
+
   @Auth( ValidRoles.user )
   @Get('private1')
   privateRoute(
