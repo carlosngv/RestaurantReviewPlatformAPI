@@ -25,8 +25,9 @@ export class UserRoleGuard implements CanActivate {
 
     if( !user )
       throw new InternalServerErrorException('User not found. Contact your administrator.')
-
-    for( let role in user.roles ) {
+  
+    for( let role of user.roles ) {
+      
       if( validRoles.includes( role ) )
         return true
     }

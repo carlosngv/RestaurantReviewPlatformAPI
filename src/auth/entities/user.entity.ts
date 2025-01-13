@@ -51,10 +51,16 @@ export class User {
     })
     isEmailConfirmed: boolean;
 
-    @OneToMany( () => Review, review => review.id )
+    @OneToMany( () => Review, review => review.user, {
+        eager: true,
+        cascade: true
+    })
     reviews: Review[];
 
-    @OneToMany( () => ReviewLike, reviewLike => reviewLike.id )
+    @OneToMany( () => ReviewLike, reviewLike => reviewLike.user, {
+        eager: true,
+        cascade: true
+    })
     likes: ReviewLike[];
 
 }

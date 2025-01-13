@@ -24,20 +24,29 @@ export class Review {
     @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    @OneToMany( () => ReviewImage, reviewImage => reviewImage.id)
+    @OneToMany( () => ReviewImage, reviewImage => reviewImage.review, {
+        cascade: true,
+        eager: true,
+    })
     images: ReviewImage[];
 
-    @OneToMany( () => ReviewComment, reviewComment => reviewComment.id)
+    @OneToMany( () => ReviewComment, reviewComment => reviewComment.review, {
+        cascade: true,
+        eager: true,
+    })
     comments: ReviewComment[];
 
-    @OneToMany( () => ReviewLike, reviewLike => reviewLike.id )
+    @OneToMany( () => ReviewLike, reviewLike => reviewLike.review, {
+        cascade: true,
+        eager: true,
+    })
     likes: ReviewLike[];
 
     @ManyToOne( () => User, user => user.id )
-    userId: string;
+    user: User;
 
     @ManyToOne( () => Restaurant, restaurant => restaurant.id )
-    restaurantId: string;
+    restaurant: Restaurant;
     
     
 

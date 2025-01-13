@@ -17,7 +17,9 @@ export class ReviewImage {
     @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    @ManyToOne( () => Review, review => review.id )
-    reviewId: string;
+    @ManyToOne( () => Review, review => review.id, {
+        onDelete: 'CASCADE'
+    })
+    review: Review;
 
 }

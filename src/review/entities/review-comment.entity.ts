@@ -18,6 +18,6 @@ export class ReviewComment {
     updatedAt: Date;
 
     @ManyToOne( () => Review, review => review.id )
-    reviewId: string;
+    review: Review;
 
 }

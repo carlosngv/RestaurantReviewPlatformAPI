@@ -16,9 +16,9 @@ export class ReviewLike {
     updatedAt: Date;
 
     @ManyToOne( () => Review, review => review.id )
-    reviewId: string;
+    review: Review;
 
     @ManyToOne( () => User, user => user.id )
-    userId: string;
+    user: User;
 
 }

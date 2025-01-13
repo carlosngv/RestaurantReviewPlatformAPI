@@ -29,7 +29,10 @@ export class Restaurant {
     } )
     images: RestaurantImage[];
 
-    @OneToMany( () => Review, review => review.id )
+    @OneToMany( () => Review, review => review.restaurant, {
+        eager: true,
+        cascade: true,
+    })
     reviews: Review[];
 
 }

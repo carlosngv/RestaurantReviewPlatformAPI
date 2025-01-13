@@ -1,4 +1,4 @@
-import { IsString, MaxLength, MinLength } from "class-validator";
+import { IsArray, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
 export class CreateRestaurantDto {
     
@@ -11,5 +11,9 @@ export class CreateRestaurantDto {
     @MinLength(10)
     @MaxLength(150)
     description: string;
+
+    @IsOptional()
+    @IsArray()
+    images?: string[];
     
 }

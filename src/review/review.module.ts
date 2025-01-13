@@ -7,10 +7,12 @@ import { ReviewImage } from './entities/review-image.entity';
 import { ReviewComment } from './entities/review-comment.entity';
 import { ReviewLike } from './entities/review-like.entity';
 import { AuthModule } from 'src/auth/auth.module';
+import { RestaurantModule } from 'src/restaurant/restaurant.module';
 
 @Module({
   imports: [
       AuthModule,
+      RestaurantModule,
       TypeOrmModule.forFeature([ Review, ReviewImage, ReviewComment, ReviewLike ]),
     ],
   controllers: [ReviewController],

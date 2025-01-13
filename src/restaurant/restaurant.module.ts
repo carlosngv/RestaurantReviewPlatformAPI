@@ -12,5 +12,6 @@ import { MulterModule } from '@nestjs/platform-express';
   ],
   controllers: [RestaurantController],
   providers: [RestaurantService],
+  exports: [ TypeOrmModule ]
 })
 export class RestaurantModule {}
